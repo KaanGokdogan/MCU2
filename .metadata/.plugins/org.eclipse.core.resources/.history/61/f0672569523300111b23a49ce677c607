@@ -1,0 +1,22 @@
+/*
+ * main.c
+ *
+ *  Created on: 8 Nis 2026
+ *      Author: MONSTER
+ */
+
+#include "main.h"
+
+
+int main(void)
+{
+	HAL_Init();
+	SystemClockConfig();
+	UART2_Init();
+	return 0;
+}
+
+void SystemClockConfig(void)
+{
+
+}

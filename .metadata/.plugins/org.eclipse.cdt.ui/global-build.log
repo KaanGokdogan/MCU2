@@ -1,0 +1,7 @@
+17:04:20 **** Incremental Build of configuration Debug for project UART2_Exercise ****
+make -j16 all 
+arm-none-eabi-size  UART2_Exercise.elf 
+   text	   data	    bss	    dec	    hex	filename
+   3860	     12	   1636	   5508	   1584	UART2_Exercise.elf
+Finished building: default.size.stdout
+ 
