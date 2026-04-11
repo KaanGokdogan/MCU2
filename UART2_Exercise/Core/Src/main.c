@@ -6,7 +6,12 @@
  */
 
 #include "main.h"
+#include "stdint.h"
+#include "string.h"
 
+
+
+char *userData = "The application is running./r/n";
 
 
 int main(void)
@@ -14,8 +19,16 @@ int main(void)
 	HAL_Init();
 	SystemClockConfig();
 	UART2_Init();
+
+	uint16_t strLen = strlen(userData);
+	HAL_UART_Transmit(&huart2, (uint8_t*) userData, strLen, HAL_MAX_DELAY);
+
+	while(1);
+
 	return 0;
 }
+
+
 
 void SystemClockConfig(void)
 {

@@ -3,6 +3,9 @@
 	<item key="hasShownOverlayPopupBefore" value="true"/>
 	<item key="replaceBarOpen" value="false"/>
 	<list key="searchhistory">
+		<item value="GPIO_speed_define"/>
+		<item value="__hal_RCC"/>
+		<item value="__hal__RCC"/>
 		<item value="uart"/>
 	</list>
 </section>
