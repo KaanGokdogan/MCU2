@@ -60,8 +60,8 @@ all: main-build
 main-build: UART2_Exercise.elf secondary-outputs
 
 # Tool invocations
-UART2_Exercise.elf UART2_Exercise.map: $(OBJS) $(USER_OBJS) C:\Users\MONSTER\Desktop\STM32\Workspaces\Udemy\ MCU2\ Kurs\UART2_Exercise\STM32F407VGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "UART2_Exercise.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\MONSTER\Desktop\STM32\Workspaces\Udemy MCU2 Kurs\UART2_Exercise\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="UART2_Exercise.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+UART2_Exercise.elf UART2_Exercise.map: $(OBJS) $(USER_OBJS) C:\Users\kaan_\OneDrive\Masaüstü\STM32\Workspaces\Udemy\ MCU2\ Kurs\UART2_Exercise\STM32F407VGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "UART2_Exercise.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\kaan_\OneDrive\Masaüstü\STM32\Workspaces\Udemy MCU2 Kurs\UART2_Exercise\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="UART2_Exercise.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

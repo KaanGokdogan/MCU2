@@ -14,6 +14,7 @@ UART_HandleTypeDef huart2;
 
 void SystemClockConfig(void);
 void UART2_Init(void);
+uint8_t Convert_To_Capital(uint8_t received_Data);
 void ErrorHandler(void);
 
 

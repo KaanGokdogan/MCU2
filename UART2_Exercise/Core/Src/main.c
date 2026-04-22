@@ -23,11 +23,28 @@ int main(void)
 	uint16_t strLen = strlen(userData);
 	HAL_UART_Transmit(&huart2, (uint8_t*) userData, strLen, HAL_MAX_DELAY);
 
-	while(1);
+	uint8_t received_Data;
+	uint8_t data_Buffer[100];
+	uint32_t count = 0;
 
+	while(1)
+	{
+		HAL_UART_Receive(&huart2, &received_Data, 1, HAL_MAX_DELAY);
+		if(received_Data == '\r')
+		{
+			break;
+		}
+		else
+		{
+			data_Buffer[count++] = Convert_To_Capital(received_Data);
+		}
+	}
+	data_Buffer[count++] = '\r';
+
+	HAL_UART_Transmit(&huart2, data_Buffer, count, HAL_MAX_DELAY);
+	while(1);
 	return 0;
 }
-
 
 
 void SystemClockConfig(void)
@@ -54,7 +71,20 @@ void UART2_Init(void)
 }
 
 
+uint8_t Convert_To_Capital(uint8_t data)
+{
+	if(data >= 'a' && data <= 'z')
+	{
+		data = data - ( 'a' - 'A');
+	}
+
+	return data;
+}
+
+
 void ErrorHandler(void)
 {
 	while(1);
 }
+
+

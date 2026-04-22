@@ -37,7 +37,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef *huart)
 	gpio_Uart.Pull = GPIO_PULLUP;
 	gpio_Uart.Speed = GPIO_SPEED_FREQ_LOW;
 	gpio_Uart.Alternate = GPIO_AF7_USART2; 		// USART_TX
-	HAL_GPIO_Init(GPIOA, &gpio_Uart);
+
 
 	gpio_Uart.Pin = GPIO_PIN_3;					// USART_RX
 	HAL_GPIO_Init(GPIOA, &gpio_Uart);

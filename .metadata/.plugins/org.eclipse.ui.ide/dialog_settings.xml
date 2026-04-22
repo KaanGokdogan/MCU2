@@ -32,6 +32,7 @@
 		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
 		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
 		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="C:\Users\kaan_\OneDrive\Masaüstü\STM32\Workspaces\Udemy MCU2 Kurs"/>
 			<item value="C:\Users\MONSTER\Desktop\STM32\Workspaces\Udemy MCU2 Kurs"/>
 			<item value="C:\Users\MONSTER\Desktop\STM32\Workspaces\Udemy MCU2 Kurs\MCU2"/>
 		</list>
@@ -49,5 +50,9 @@
 			<item key="DIALOG_HEIGHT" value="577"/>
 			<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>
 		</section>
+	</section>
+	<section name="ChooseWorkspaceDialogSettings">
+		<item key="DIALOG_X_ORIGIN" value="393"/>
+		<item key="DIALOG_Y_ORIGIN" value="244"/>
 	</section>
 </section>
