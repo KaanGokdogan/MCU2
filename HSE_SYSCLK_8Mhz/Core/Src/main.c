@@ -1,47 +1,77 @@
 /*
  * main.c
  *
- *  Created on: 8 Nis 2026
+ *  Created on: 24 Nis 2026
  *      Author: MONSTER
  */
 
 #include "main.h"
-#include "stdint.h"
-#include "string.h"
 
-#define TRUE 	1
-#define FALSE 	0
 
 UART_HandleTypeDef huart2;
-char *userData = "The application is running./r/n";
 
-uint8_t received_Data;
-uint8_t reception_Complete;
-uint8_t data_Buffer[100];
-uint32_t count = 0;
 
 
 int main(void)
 {
+	RCC_OscInitTypeDef osc_Init;
+	RCC_ClkInitTypeDef clock_Config;
+	char data[100];
+
 	HAL_Init();
-	SystemClockConfig();
 	UART2_Init();
 
-	uint16_t strLen = strlen(userData);
-	HAL_UART_Transmit(&huart2, (uint8_t*) userData, strLen, HAL_MAX_DELAY);
+	memset(&osc_Init,0,sizeof(osc_Init));
+	osc_Init.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+	osc_Init.HSEState = RCC_HSE_BYPASS;
 
-	HAL_UART_Receive_IT(&huart2, &received_Data, 1);
+	if(HAL_RCC_OscConfig(&osc_Init) != HAL_OK)
+	{
+		ErrorHandler();
+	}
+
+	clock_Config.ClockType = RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | \
+							RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+	clock_Config.SYSCLKSource = RCC_SYSCLKSOURCE_HSE;
+	clock_Config.AHBCLKDivider = RCC_SYSCLK_DIV2;
+	clock_Config.APB1CLKDivider = RCC_HCLK_DIV2;
+	clock_Config.APB2CLKDivider = RCC_HCLK_DIV2;
+
+	if(HAL_RCC_ClockConfig(&clock_Config, FLASH_ACR_LATENCY_0WS) != HAL_OK)
+	{
+		ErrorHandler();
+	}
+
+	/*------------------- AFTER THIS LINE SYSCLK is SOURCED BY HSE -------------------*/
+
+	__HAL_RCC_HSI_DISABLE();
+
+	/* LETS REDO THE SYSTICK CONFIGURATION*/
+
+	HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq() / 1000);
+	HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
+
+	UART2_Init();
+
+	memset(&data,0,sizeof(data));
+	sprintf(data,"SYSCLK: %ld\r\n",HAL_RCC_GetSysClockFreq());
+	HAL_UART_Transmit(&huart2, (uint8_t*) data, strlen(data), HAL_MAX_DELAY);
+
+	memset(&data,0,sizeof(data));
+	sprintf(data,"SYSCLK: %ld\r\n",HAL_RCC_GetHCLKFreq());
+	HAL_UART_Transmit(&huart2, (uint8_t*) data, strlen(data), HAL_MAX_DELAY);
+
+	memset(&data,0,sizeof(data));
+	sprintf(data,"SYSCLK: %ld\r\n",HAL_RCC_GetPCLK1Freq());
+	HAL_UART_Transmit(&huart2, (uint8_t*) data, strlen(data), HAL_MAX_DELAY);
+
+	memset(&data,0,sizeof(data));
+	sprintf(data,"SYSCLK: %ld\r\n",HAL_RCC_GetPCLK2Freq());
+	HAL_UART_Transmit(&huart2, (uint8_t*) data, strlen(data), HAL_MAX_DELAY);
 
 	while(1);
 	return 0;
 }
-
-
-void SystemClockConfig(void)
-{
-
-}
-
 
 void UART2_Init(void)
 {
@@ -58,32 +88,6 @@ void UART2_Init(void)
 		// There is a problem
 		ErrorHandler();
 	}
-}
-
-
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
-{
-	if(received_Data == '/r')
-	{
-		reception_Complete = TRUE;
-		data_Buffer[count++] = 'r';
-		HAL_UART_Transmit(&huart2, data_Buffer, 1, HAL_MAX_DELAY);
-	}
-	else
-	{
-		data_Buffer[count++] = received_Data;
-	}
-}
-
-
-uint8_t Convert_To_Capital(uint8_t data)
-{
-	if(data >= 'a' && data <= 'z')
-	{
-		data = data - ( 'a' - 'A');
-	}
-
-	return data;
 }
 
 

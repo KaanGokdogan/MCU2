@@ -1,7 +1,7 @@
 /*
  * main.h
  *
- *  Created on: 8 Nis 2026
+ *  Created on: 24 Nis 2026
  *      Author: MONSTER
  */
 
@@ -9,12 +9,12 @@
 #define INC_MAIN_H_
 
 #include "stm32f4xx_hal.h"
+#include "stdint.h"
+#include "stdio.h"
+#include "string.h"
 
 
-
-void SystemClockConfig(void);
 void UART2_Init(void);
-uint8_t Convert_To_Capital(uint8_t received_Data);
 void ErrorHandler(void);
 
 
