@@ -11,7 +11,7 @@
 
 
 
-char *userData = "The application is running./r/n";
+char *userData = "The application is running.\r\n";
 
 
 int main(void)

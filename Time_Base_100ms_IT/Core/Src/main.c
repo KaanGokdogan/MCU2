@@ -22,7 +22,7 @@ int main(void)
 	HAL_TIM_Base_Start_IT(&htimer6);
 
 
-
+	while(1);
 
 	return 0;
 }

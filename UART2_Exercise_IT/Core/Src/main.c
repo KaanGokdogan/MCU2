@@ -1,4 +1,4 @@
-/*
+ /*
  * main.c
  *
  *  Created on: 8 Nis 2026
@@ -13,10 +13,10 @@
 #define FALSE 	0
 
 UART_HandleTypeDef huart2;
-char *userData = "The application is running./r/n";
+char *userData = "The application is running.\r\n";
 
 uint8_t received_Data;
-uint8_t reception_Complete;
+uint8_t reception_Complete = FALSE;
 uint8_t data_Buffer[100];
 uint32_t count = 0;
 
@@ -30,7 +30,10 @@ int main(void)
 	uint16_t strLen = strlen(userData);
 	HAL_UART_Transmit(&huart2, (uint8_t*) userData, strLen, HAL_MAX_DELAY);
 
-	HAL_UART_Receive_IT(&huart2, &received_Data, 1);
+	while( reception_Complete != TRUE)
+	{
+		HAL_UART_Receive_IT(&huart2, &received_Data, 1);
+	}
 
 	while(1);
 	return 0;
@@ -63,15 +66,15 @@ void UART2_Init(void)
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-	if(received_Data == '/r')
+	if(received_Data == '\r')
 	{
 		reception_Complete = TRUE;
-		data_Buffer[count++] = 'r';
-		HAL_UART_Transmit(&huart2, data_Buffer, 1, HAL_MAX_DELAY);
+		data_Buffer[count++] = '\r';
+		HAL_UART_Transmit(&huart2, data_Buffer, count, HAL_MAX_DELAY);
 	}
 	else
 	{
-		data_Buffer[count++] = received_Data;
+		data_Buffer[count++] = Convert_To_Capital(received_Data);
 	}
 }
 

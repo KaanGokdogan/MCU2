@@ -16,7 +16,7 @@ int main(void)
 	char data[100];
 	HAL_Init();
 
-	SystemClock_Config_HSI(SYS_CLOCK_FREQ_50_MHZ);
+	SystemClock_Config_HSI(SYS_CLOCK_FREQ_84_MHZ);
 
 	UART2_Init();
 
@@ -25,15 +25,15 @@ int main(void)
 	HAL_UART_Transmit(&huart2, (uint8_t*) data, strlen(data), HAL_MAX_DELAY);
 
 	memset(&data,0,sizeof(data));
-	sprintf(data,"SYSCLK: %ld\r\n",HAL_RCC_GetHCLKFreq());
+	sprintf(data,"HCLK: %ld\r\n",HAL_RCC_GetHCLKFreq());
 	HAL_UART_Transmit(&huart2, (uint8_t*) data, strlen(data), HAL_MAX_DELAY);
 
 	memset(&data,0,sizeof(data));
-	sprintf(data,"SYSCLK: %ld\r\n",HAL_RCC_GetPCLK1Freq());
+	sprintf(data,"PCLK1: %ld\r\n",HAL_RCC_GetPCLK1Freq());
 	HAL_UART_Transmit(&huart2, (uint8_t*) data, strlen(data), HAL_MAX_DELAY);
 
 	memset(&data,0,sizeof(data));
-	sprintf(data,"SYSCLK: %ld\r\n",HAL_RCC_GetPCLK2Freq());
+	sprintf(data,"PCLK2: %ld\r\n",HAL_RCC_GetPCLK2Freq());
 	HAL_UART_Transmit(&huart2, (uint8_t*) data, strlen(data), HAL_MAX_DELAY);
 
 	while(1);
