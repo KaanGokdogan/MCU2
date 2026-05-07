@@ -13,6 +13,7 @@
 #include "string.h"
 
 void SystemClockConfig(void);
+void UART2_Init(void);
 void GPIO_Init();
 void Timer6_Init(void);
 void ErrorHandler(void);
