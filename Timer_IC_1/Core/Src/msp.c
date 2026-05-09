@@ -53,18 +53,32 @@ void HAL_TIM_IC_MspInit(TIM_HandleTypeDef *htimer)
 {
 	// 1. Enable the clock for the TIM2 peripheral
 	__HAL_RCC_TIM2_CLK_ENABLE();
-	__HAL_RCC_GPIOB_CLK_ENABLE();
+	__HAL_RCC_GPIOA_CLK_ENABLE();
+
 	// 2. Configure a GPIO to behave as timer2 channel 1
 	GPIO_InitTypeDef tim2ch1_GPIO;
-	tim2ch1_GPIO.Pin = GPIO_PIN_3;
+	tim2ch1_GPIO.Pin = GPIO_PIN_0;
 	tim2ch1_GPIO.Mode = GPIO_MODE_AF_PP;
 	tim2ch1_GPIO.Alternate = GPIO_AF1_TIM2;
 
-	HAL_GPIO_Init(GPIOB, &tim2ch1_GPIO);
+	HAL_GPIO_Init(GPIOA, &tim2ch1_GPIO);
 
 	// 3. NVIC settings
 	HAL_NVIC_SetPriority(TIM2_IRQn,15,0);
 	HAL_NVIC_EnableIRQ(TIM2_IRQn);
 }
+
+void HAL_TIM_Base_MspInit(TIM_HandleTypeDef *htim)
+{
+
+	// 1. Enable the clock for the TIM6 peripheral
+	__HAL_RCC_TIM6_CLK_ENABLE();
+
+	// 2. NVIC settings
+	HAL_NVIC_SetPriority(TIM6_DAC_IRQn, 15, 0);
+	HAL_NVIC_EnableIRQ(TIM6_DAC_IRQn);
+}
+
+
 
 

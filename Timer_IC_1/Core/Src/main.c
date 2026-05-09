@@ -11,7 +11,6 @@ UART_HandleTypeDef huart2;
 TIM_HandleTypeDef htimer2;
 TIM_HandleTypeDef htimer6;
 
-
 uint32_t input_Capture[2] = {0};
 uint8_t count = 1;
 uint8_t is_Capture_Done = FALSE;
@@ -24,7 +23,7 @@ int main(void)
 	double timer2_Count_Reset = 0;
 	double user_Signal_Time_Period = 0;
 	double user_Signal_Freq = 0;
-	char user_Msg[100] = {0};
+	char user_Msg[100];
 
 
 	HAL_Init();
@@ -34,7 +33,6 @@ int main(void)
 	Timer2_Init();
 	Timer6_Init();
 	LSE_Config();
-
 
 
 	HAL_TIM_Base_Start_IT(&htimer6);
@@ -48,15 +46,15 @@ int main(void)
 			if(input_Capture[1] > input_Capture[0])
 				capture_Difference = input_Capture[1] - input_Capture[0];
 			else
-				capture_Difference = (0xFFFFFFFF - input_Capture[0] + input_Capture[1]);
+				capture_Difference = (0xFFFFFFFF - input_Capture[0]) + input_Capture[1];
 
 		timer2_Count_Freq =  (HAL_RCC_GetPCLK1Freq() * 2) / (htimer2.Init.Prescaler + 1);
-		timer2_Count_Reset = 1 / timer2_Count_Freq;
+		timer2_Count_Reset = 1.0 / timer2_Count_Freq;
 		user_Signal_Time_Period = capture_Difference * timer2_Count_Reset;
-		user_Signal_Freq = 1 / user_Signal_Time_Period;
-
-		sprintf(user_Msg,"Frequency of the signal applied = %lf\r\n", user_Signal_Freq);
+		user_Signal_Freq = 1.0 / user_Signal_Time_Period;
+		sprintf(user_Msg,"Frequency of the signal applied = %f\r\n", user_Signal_Freq);
 		HAL_UART_Transmit(&huart2, (uint8_t*) user_Msg, strlen(user_Msg), HAL_MAX_DELAY);
+
 		is_Capture_Done = FALSE;
 		}
 	}
@@ -223,8 +221,8 @@ void Timer2_Init(void)
 void Timer6_Init(void)
 {
 	htimer6.Instance = TIM6;
-	htimer6.Init.Prescaler = 24;
-	htimer6.Init.Period = 64000 - 1;
+	htimer6.Init.Prescaler = 99;
+	htimer6.Init.Period = 31250 - 1;
 
 	if(HAL_TIM_Base_Init(&htimer6) != HAL_OK)
 	{
@@ -236,6 +234,7 @@ void Timer6_Init(void)
 void LSE_Config (void)
 {
 	// Board does not include an LSE crystal. Replaced with HSI
+	// And we put jumper cable to PA0 and PD13 (Led)
 #if 0
 	RCC_OscInitTypeDef osc_Init;
 	osc_Init.OscillatorType = RCC_OSCILLATORTYPE_LSE;
