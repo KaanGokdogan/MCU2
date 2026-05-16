@@ -25,7 +25,6 @@ void GPIO_Init();
 void UART2_Init(void);
 void CAN1_Init(void);
 void CAN1_Tx(void);
-void CAN1_Rx(void);
 void CAN_Filter_Config(void);
 
 
